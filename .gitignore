@@ -1,0 +1,49 @@
+# Claude Code local settings
+.claude/settings.local.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+.venv/
+env/
+.env
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Database
+*.db
+*.sqlite
+/data/
+
+# Logs
+*.log
+logs/
+
+# Secrets
+.env
+*.pem
+*.key
+credentials.yaml
+
+# OS
+.DS_Store
+Thumbs.db
+nul
+*/nul
+
+# Config with secrets
+config/settings.yaml
+!config/settings.example.yaml
+*.egg-info/

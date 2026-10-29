@@ -1,0 +1,42 @@
+# Crypto Options Bot Configuration
+# Copy this to settings.yaml and fill in your values
+
+deribit:
+  # Use test.deribit.com for paper trading, www.deribit.com for production
+  base_url: "https://test.deribit.com"
+  ws_url: "wss://test.deribit.com/ws/api/v2"
+  api_key: "${DERIBIT_API_KEY}"
+  api_secret: "${DERIBIT_API_SECRET}"
+
+risk:
+  max_position_pct: 20.0      # Max 20% of capital per position
+  max_exposure_pct: 30.0      # Max 30% total exposure
+  max_daily_loss_pct: 5.0     # Halt if daily loss exceeds 5%
+  max_drawdown_pct: 15.0      # Halt if drawdown exceeds 15%
+  dvol_reduce_threshold: 73.0 # Reduce ETH position sizes when DVOL > 73
+  dvol_halt_threshold: 82.0   # Halt undefined-risk ETH entries when DVOL > 82
+
+emergency:
+  # TODO(backtest): Validate threshold - 100 may be too conservative
+  dvol_emergency_threshold: 100.0  # Close short vol positions when DVOL > 100
+
+database:
+  path: "data/bot.db"
+
+trading:
+  currency: "ETH"  # Trading currency: BTC or ETH
+  settlement: "linear"  # "linear" = USDC-settled, "inverse" = crypto-margined
+
+paper_trading:
+  loop_interval_seconds: 60    # How often to check market and manage positions
+  position_sync_interval: 5    # Sync positions with exchange every N iterations
+  use_market_orders: false     # Use limit orders for entries; exits still use market orders
+  initial_capital_usd: 10000.0 # Starting capital for paper trading
+
+telegram:
+  enabled: false
+  bot_token: "${TELEGRAM_BOT_TOKEN}"
+  chat_id: "${TELEGRAM_CHAT_ID}"
+  notify_entry: true
+  notify_exit: true
+  notify_circuit_breaker: true

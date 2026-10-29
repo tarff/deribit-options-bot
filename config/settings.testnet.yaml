@@ -1,0 +1,42 @@
+# Paper Trading Configuration - Deribit Testnet
+# Use this for testing strategies without risking real capital
+
+deribit:
+  # Deribit testnet URL
+  base_url: "https://test.deribit.com"
+  ws_url: "wss://test.deribit.com/ws/api/v2"
+  # Get testnet API keys from: https://test.deribit.com/
+  api_key: "${DERIBIT_TESTNET_API_KEY}"
+  api_secret: "${DERIBIT_TESTNET_API_SECRET}"
+
+risk:
+  max_position_pct: 20.0
+  max_exposure_pct: 30.0
+  max_daily_loss_pct: 5.0
+  max_drawdown_pct: 15.0
+  dvol_reduce_threshold: 73.0
+  dvol_halt_threshold: 82.0
+
+emergency:
+  dvol_emergency_threshold: 100.0
+
+trading:
+  currency: "ETH"
+  settlement: "linear"
+
+paper_trading:
+  loop_interval_seconds: 60
+  position_sync_interval: 5
+  use_market_orders: false
+  initial_capital_usd: 10000.0
+
+database:
+  path: "data/paper_trading.db"
+
+telegram:
+  enabled: false
+  bot_token: "${TELEGRAM_BOT_TOKEN}"
+  chat_id: "${TELEGRAM_CHAT_ID}"
+  notify_entry: true
+  notify_exit: true
+  notify_circuit_breaker: true

@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Outfit', sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: #0D0D0F;
+  color: #FFFFFF;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #151518;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A2A32;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3A3A44;
+}
+
+/* Custom utility classes */
+@layer components {
+  .card {
+    @apply bg-bg-card border border-border rounded-lg p-4;
+  }
+
+  .card-hover {
+    @apply transition-all duration-200 hover:border-accent-cyan hover:shadow-glow-cyan;
+  }
+
+  .text-mono {
+    @apply font-mono;
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.15);
+  }
+
+  .glow-profit {
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+  }
+
+  .glow-loss {
+    box-shadow: 0 0 20px rgba(255, 51, 102, 0.15);
+  }
+}
+
+/* Number formatting */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Pulse animation for live indicator */
+@keyframes live-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-live-pulse {
+  animation: live-pulse 2s ease-in-out infinite;
+}
+
+/* Flash animation for data updates */
+@keyframes flash-update {
+  0% {
+    background-color: rgba(0, 217, 255, 0.2);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.flash-update {
+  animation: flash-update 0.5s ease-out;
+}

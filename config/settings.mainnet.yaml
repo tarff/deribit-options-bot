@@ -1,0 +1,55 @@
+# Mainnet Trading Configuration - Deribit Production
+# CAUTION: This connects to REAL Deribit with REAL money
+#
+# Prerequisites:
+# 1. Create .env with DERIBIT_API_KEY, DERIBIT_API_SECRET, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+# 2. Review ALL risk parameters before starting
+# 3. Start with small initial_capital_usd and monitor closely
+
+deribit:
+  base_url: "https://www.deribit.com"
+  ws_url: "wss://www.deribit.com/ws/api/v2"
+  api_key: "${DERIBIT_API_KEY}"
+  api_secret: "${DERIBIT_API_SECRET}"
+
+trading:
+  currency: "ETH"
+  settlement: "linear"
+
+risk:
+  max_position_pct: 20.0
+  max_exposure_pct: 30.0
+  max_daily_loss_pct: 5.0
+  max_drawdown_pct: 15.0
+  dvol_reduce_threshold: 73.0
+  dvol_halt_threshold: 82.0
+
+emergency:
+  dvol_emergency_threshold: 100.0
+
+database:
+  path: "data/mainnet.db"
+
+paper_trading:
+  loop_interval_seconds: 60
+  position_sync_interval: 5
+  use_market_orders: false
+  # VALIDATION-PHASE CAPITAL. Confirm/adjust to your own risk budget.
+  # Technical floor: the position sizer rejects trades below 0.1 ETH, where
+  # size_coins = capital * 0.20 (Half-Kelly cap) / ETH_price. So the minimum
+  # capital that can place a trade is ~0.5 * ETH_price (~$810 at ETH $1,620 in
+  # the normal regime; ~2x that if DVOL is in the 73-82 reduce band). $1,500
+  # clears the floor with margin at current prices while capping absolute risk
+  # (max daily loss 5% = $75, max drawdown 15% = $225).
+  # NOTE: run_paper_trading.py seeds capital from its --capital CLI flag, NOT
+  # this value. This is only read on a fresh DB by entry points that use it.
+  # The systemd ExecStart MUST pass --capital 1500 (see docs/MAINNET_GO_LIVE.md).
+  initial_capital_usd: 1500.0
+
+telegram:
+  enabled: true
+  bot_token: "${TELEGRAM_BOT_TOKEN}"
+  chat_id: "${TELEGRAM_CHAT_ID}"
+  notify_entry: true
+  notify_exit: true
+  notify_circuit_breaker: true
